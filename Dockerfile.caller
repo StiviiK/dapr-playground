@@ -17,7 +17,7 @@ RUN go mod download
 RUN go mod verify
 
 # Build the binary.
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -ldflags="-w -s" -o /go/bin/caller caller.go
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -ldflags="-w -s" -o /go/bin/dapr-caller caller.go
 
 # Runner
 FROM scratch
@@ -26,6 +26,6 @@ FROM scratch
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
 # Copy our static executable.
-COPY --from=builder /go/bin/caller /go/bin/caller
+COPY --from=builder /go/bin/dapr-caller /go/bin/dapr-caller
 
-ENTRYPOINT ["/go/bin/caller"]
+ENTRYPOINT ["/go/bin/dapr-caller"]

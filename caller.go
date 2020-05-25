@@ -15,7 +15,7 @@ func main() {
 	// Get the Dapr port and create a connection
 	daprPort := os.Getenv("DAPR_GRPC_PORT")
 	daprAddress := fmt.Sprintf("localhost:%s", daprPort)
-	fmt.Printf("Tryin to connect to dapr grpc with %s", daprAddress)
+	fmt.Printf("Tryin to connect to dapr grpc with %s\n", daprAddress)
 	conn, err := grpc.Dial(daprAddress, grpc.WithInsecure())
 	if err != nil {
 		fmt.Println(err)
@@ -27,11 +27,12 @@ func main() {
 
 	// Create the client
 	client := pb.NewDaprClient(conn)
+	clientId := "my-client-dapr"
 	fmt.Println("after pb.NewDaprClient(conn)")
 
 	// Invoke a method called MyMethod on another Dapr enabled service with id client
 	resp, err := client.InvokeService(context.Background(), &pb.InvokeServiceRequest{
-		Id: "client",
+		Id: clientId,
 		Message: &commonv1pb.InvokeRequest{
 			Method:      "MyMethod",
 			ContentType: "text/plain; charset=UTF-8",
