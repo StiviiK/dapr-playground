@@ -10,7 +10,9 @@ RUN apk update && \
     update-ca-certificates
 
 # Add src files
-ADD . .
+ADD client .
+ADD go.mod .
+ADD go.sum .
 
 # Fetch dependencies.
 RUN go mod download
@@ -29,5 +31,4 @@ COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=builder /go/bin/dapr-client /go/bin/dapr-client
 
 EXPOSE 4000
-
 ENTRYPOINT ["/go/bin/dapr-client"]

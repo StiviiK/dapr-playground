@@ -10,7 +10,9 @@ RUN apk update && \
     update-ca-certificates
 
 # Add src files
-ADD . .
+ADD caller .
+ADD go.mod .
+ADD go.sum .
 
 # Fetch dependencies.
 RUN go mod download
