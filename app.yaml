@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: my-client
+  name: my-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-client
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: my-client
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/id: "my-client"
+        dapr.io/port: "4000"
+    spec:
+      containers:
+      - image: dapr0acr0prexqb.azurecr.io/actor-go-client:latest
+        name: my-client
+        resources: {}
+        env:
+        - name: DAPR_GRPC_PORT
+          value: "50001"
+        ports:
+        - containerPort: 4000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: my-caller
+  name: my-caller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-caller
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: my-caller
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/id: "my-caller"
+    spec:
+      containers:
+      - image: dapr0acr0prexqb.azurecr.io/actor-go-caller:latest
+        name: my-caller
+        resources: {}
+        env:
+        - name: DAPR_GRPC_PORT
+          value: "50001"
