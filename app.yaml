@@ -21,9 +21,30 @@ spec:
         dapr.io/port: "4000"
     spec:
       containers:
-      - image: dapr0acr0prexqb.azurecr.io/actor-go-client:4
+      - image: dapr0acr0prexqb.azurecr.io/actor-go-client:5
         name: client
         resources: {}
+        ports:
+        - containerPort: 4000
+        env:
+        - name: DAPR_GRPC_PORT
+          value: "50001"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: client
+  name: client
+spec:
+  ports:
+  - port: 4000
+    protocol: TCP
+    targetPort: 4000
+  selector:
+    app: client
+  type: ClusterIP
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -47,7 +68,7 @@ spec:
         dapr.io/protocol: "grpc"
     spec:
       containers:
-      - image: dapr0acr0prexqb.azurecr.io/actor-go-caller:6
+      - image: dapr0acr0prexqb.azurecr.io/actor-go-caller:7
         name: caller
         resources: {}
         env:

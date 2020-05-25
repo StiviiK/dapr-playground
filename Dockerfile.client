@@ -28,4 +28,6 @@ COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 # Copy our static executable.
 COPY --from=builder /go/bin/dapr-client /go/bin/dapr-client
 
+EXPOSE 4000
+
 ENTRYPOINT ["/go/bin/dapr-client"]

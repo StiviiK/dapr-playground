@@ -49,62 +49,62 @@ func main() {
 
 	fmt.Println(string(resp.GetData().GetValue()))
 
-	// Publish a message to the topic TopicA
-	_, err = client.PublishEvent(context.Background(), &pb.PublishEventEnvelope{
-		Topic: "TopicA",
-		Data: &any.Any{
-			Value: []byte("Hi from Pub Sub"),
-		},
-	})
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Println("Published message!")
-	}
+	// // Publish a message to the topic TopicA
+	// _, err = client.PublishEvent(context.Background(), &pb.PublishEventEnvelope{
+	// 	Topic: "TopicA",
+	// 	Data: &any.Any{
+	// 		Value: []byte("Hi from Pub Sub"),
+	// 	},
+	// })
+	// if err != nil {
+	// 	fmt.Println(err)
+	// } else {
+	// 	fmt.Println("Published message!")
+	// }
 
-	// Save state with the key myKey
-	_, err = client.SaveState(context.Background(), &pb.SaveStateEnvelope{
-		// statestore is the name of the default redis state store , set up by Dapr CLI
-		StoreName: "statestore",
-		Requests: []*pb.StateRequest{
-			{
-				Key: "myKey",
-				Value: &any.Any{
-					Value: []byte("My State"),
-				},
-			},
-		},
-	})
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Println("Saved state!")
-	}
+	// // Save state with the key myKey
+	// _, err = client.SaveState(context.Background(), &pb.SaveStateEnvelope{
+	// 	// statestore is the name of the default redis state store , set up by Dapr CLI
+	// 	StoreName: "statestore",
+	// 	Requests: []*pb.StateRequest{
+	// 		{
+	// 			Key: "myKey",
+	// 			Value: &any.Any{
+	// 				Value: []byte("My State"),
+	// 			},
+	// 		},
+	// 	},
+	// })
+	// if err != nil {
+	// 	fmt.Println(err)
+	// } else {
+	// 	fmt.Println("Saved state!")
+	// }
 
-	// Get state for key myKey
-	r, err := client.GetState(context.Background(), &pb.GetStateEnvelope{
-		// statestore is the name of the default redis state store , set up by Dapr CLI
-		StoreName: "statestore",
-		Key:       "myKey",
-	})
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Println("Got state!")
-		fmt.Println(string(r.Data.Value))
-	}
+	// // Get state for key myKey
+	// r, err := client.GetState(context.Background(), &pb.GetStateEnvelope{
+	// 	// statestore is the name of the default redis state store , set up by Dapr CLI
+	// 	StoreName: "statestore",
+	// 	Key:       "myKey",
+	// })
+	// if err != nil {
+	// 	fmt.Println(err)
+	// } else {
+	// 	fmt.Println("Got state!")
+	// 	fmt.Println(string(r.Data.Value))
+	// }
 
-	// Delete state for key myKey
-	_, err = client.DeleteState(context.Background(), &pb.DeleteStateEnvelope{
-		// statestore is the name of the default redis state store , set up by Dapr CLI
-		StoreName: "statestore",
-		Key:       "myKey",
-	})
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Println("State deleted")
-	}
+	// // Delete state for key myKey
+	// _, err = client.DeleteState(context.Background(), &pb.DeleteStateEnvelope{
+	// 	// statestore is the name of the default redis state store , set up by Dapr CLI
+	// 	StoreName: "statestore",
+	// 	Key:       "myKey",
+	// })
+	// if err != nil {
+	// 	fmt.Println(err)
+	// } else {
+	// 	fmt.Println("State deleted")
+	// }
 
 	// Invoke output binding named storage. Make sure you set up a Dapr binding, otherwise this will fail
 	_, err = client.InvokeBinding(context.Background(), &pb.InvokeBindingEnvelope{
