@@ -27,12 +27,11 @@ func main() {
 
 	// Create the client
 	client := pb.NewDaprClient(conn)
-	clientId := "my-client-dapr"
 	fmt.Println("after pb.NewDaprClient(conn)")
 
 	// Invoke a method called MyMethod on another Dapr enabled service with id client
 	resp, err := client.InvokeService(context.Background(), &pb.InvokeServiceRequest{
-		Id: clientId,
+		Id: "client",
 		Message: &commonv1pb.InvokeRequest{
 			Method:      "MyMethod",
 			ContentType: "text/plain; charset=UTF-8",

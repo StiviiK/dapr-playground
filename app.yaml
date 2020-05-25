@@ -2,53 +2,53 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: my-client
-  name: my-client
+    app: client
+  name: client
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: my-client
+      app: client
   strategy: {}
   template:
     metadata:
       labels:
-        app: my-client
+        app: client
       annotations:
         dapr.io/enabled: "true"
-        dapr.io/id: "my-client"
+        dapr.io/id: "client"
         dapr.io/protocol: "grpc"
         dapr.io/port: "4000"
     spec:
       containers:
       - image: dapr0acr0prexqb.azurecr.io/actor-go-client:4
-        name: my-client
+        name: client
         resources: {}
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: my-caller
-  name: my-caller
+    app: caller
+  name: caller
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: my-caller
+      app: caller
   strategy: {}
   template:
     metadata:
       labels:
-        app: my-caller
+        app: caller
       annotations:
         dapr.io/enabled: "true"
-        dapr.io/id: "my-caller"
+        dapr.io/id: "caller"
         dapr.io/protocol: "grpc"
     spec:
       containers:
-      - image: dapr0acr0prexqb.azurecr.io/actor-go-caller:5
-        name: my-caller
+      - image: dapr0acr0prexqb.azurecr.io/actor-go-caller:6
+        name: caller
         resources: {}
         env:
         - name: DAPR_GRPC_PORT
